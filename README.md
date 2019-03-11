@@ -63,7 +63,7 @@ docker container rm -f {XXXX}
 
 ### DockerfileでPythonイメージをつくる
 
-``````
+```
 .
 ├── Dockerfile
 ├── script.py
