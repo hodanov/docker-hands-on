@@ -63,6 +63,13 @@ docker container rm -f {XXXX}
 
 ### DockerfileでPythonイメージをつくる
 
+``````
+.
+├── Dockerfile
+├── script.py
+└── requirements.txt
+```
+
 ```
 # イメージのビルド
 # docker image build -t {IMAGE_NAME}:{TAG} {PATH}
@@ -74,7 +81,7 @@ docker container run -dt --name my_python my_python:v1
 # -dはコンテナをバックグランドで起動しっぱなしにするオプション
 
 # コンテナへADDしたPythonスクリプトを実行
-docker container exec -it my_python python python_script.py
+docker container exec -it my_python python script.py
 ```
 
 #### ボリュームのマウント
@@ -108,4 +115,24 @@ docker image prune
 
 # イメージ、ボリューム、ネットワークなど、全てお掃除
 docker system prune
+```
+
+## 💻 Docker Composeでマルチコンテナを実行する
+
+```
+.
+├── Dockerfile
+├── docker-compose.yml
+└── requirements.txt
+```
+
+```
+#
+docker-compose up -d
+```
+
+```
+# djangoのプロジェクトファイル作成
+# docker container exec -it {CONTAINER_NAME} django-admin startproject {PROJECT_NAME}
+docker container exec -it  django-admin startproject test
 ```
