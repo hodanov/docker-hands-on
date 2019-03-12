@@ -1,22 +1,18 @@
 import requests
-from lxml.html import fromstring
 from pyquery import PyQuery
 from bs4 import BeautifulSoup
 
 url = 'https://www.google.com/'
-
 r = requests.get(url)
-tree = fromstring(r.content)
-print('===============Requests===============')
-print(tree.findtext('.//title'))
-print('===============Requests===============\n')
+context = {
+    'PyQuery': '',
+    'BeautifulSoup': '',
+}
 
-pq = PyQuery(url=url)
-print('===============PyQuery===============')
-print(pq('head title'))
-print('===============PyQuery===============\n')
+pq = PyQuery(r.text)
+context['PyQuery'] = pq('head title').text()
 
-bs = BeautifulSoup(r.content, 'html.parser')
-print('===============BeautifulSoup===============')
-print(bs.head.title)
-print('===============BeautifulSoup===============\n')
+bs = BeautifulSoup(r.text, 'html.parser')
+context['BeautifulSoup'] = bs.head.title.string
+
+print(context)
