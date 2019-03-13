@@ -1,5 +1,5 @@
 # FROM: docker image pull from docker hub.
-FROM python:3.5
+FROM python:3.7
 
 # ENV: Specify environment variables that is used in the Docker container
 # PYTHONUNBUFFERED 1: Off the buffer of stdout and stderr.

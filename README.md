@@ -64,7 +64,7 @@ docker container rm -f {XXXX}
 ### DockerfileでPythonイメージをつくる
 
 ```
-.
+01/
 ├── Dockerfile
 ├── script.py
 └── requirements.txt
@@ -119,20 +119,43 @@ docker system prune
 
 ## 💻 Docker Composeでマルチコンテナを実行する
 
+### バージョンの確認
+docker desktop for Windows/Macなら`docker-compose`ですぐに使える。  
+Linuxは別途インストールが必要。
 ```
-.
+docker-compose -v
+```
+
+### Python/Django + PostgreSQLの開発環境構築
+```
+02/
 ├── Dockerfile
 ├── docker-compose.yml
 └── requirements.txt
 ```
 
 ```
-#
+# YMLにしたがってコンテナをポコポコ並べる
+docker-compose up
+
+# デタッチドモードでコンテナを並べる
 docker-compose up -d
+
+# コンテナを並べる際、dockerイメージを強制的にビルドする
+docker-compose up -d --build
+
+# django_webコンテナに、djangoのプロジェクトを作成するコマンドを流す。
+# Djangoプロジェクトが作成される。
+docker container exec -it django_web django-admin startproject docker_hands_on
+
+# djangoの簡易サーバーを起動
+docker container exec -it django_web python docker_hands_on/manage.py runserver 0:8000
 ```
 
+### Golang + Node.js +
 ```
-# djangoのプロジェクトファイル作成
-# docker container exec -it {CONTAINER_NAME} django-admin startproject {PROJECT_NAME}
-docker container exec -it  django-admin startproject test
+03/
+├── Dockerfile
+├── docker-compose.yml
+└── requirements.txt
 ```
