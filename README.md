@@ -1,7 +1,7 @@
 # Docker入門ハンズオン！
-## 💻 Dockerの基本操作
+## Dockerの基本操作
 
-### バージョンの確認
+### 💻 バージョンの確認
 
 ```
 # 定番
@@ -12,7 +12,7 @@ docker --version
 docker version
 ```
 
-### Dockerイメージとコンテナの基本
+### 💻 Dockerイメージとコンテナの基本
 
 ```
 # イメージを探す
@@ -59,9 +59,9 @@ docker container exec -it {XXXX} /bin/bash
 docker container rm -f {XXXX}
 ```
 
-## 💻 Dockerfileで開発環境を整える
+## Dockerfileで開発環境を整える
 
-### DockerfileでPythonイメージをつくる
+### 💻 DockerfileでPythonイメージをつくる
 
 ```
 01/
@@ -84,22 +84,24 @@ docker container run -dt --name my_python my_python:v1
 docker container exec -it my_python python script.py
 ```
 
-#### ボリュームのマウント
+#### 💻 ボリュームのマウント
 
 ```
 # ホストのディレクトリをボリュームとして、コンテナへマウントする
 docker container run -dt --name my_python -v $(pwd):/code my_python:v1
 ```
 
-## 💻 イメージの公開
+## イメージの公開
 
-### 作ったイメージをDocker Hubに登録
+### 💻 作ったイメージをDocker Hubに登録
 
 ```
 # docker image push [option] {REPOSITORY_NAME}:{TAG}
 ```
 
-## 💻 運用管理向けコマンド
+## 運用管理向けのコマンド
+
+### 💻 コンテナの利用状況確認やお掃除
 
 ```
 # コンテナの利用状況の取得
@@ -117,16 +119,16 @@ docker image prune
 docker system prune
 ```
 
-## 💻 Docker Composeでマルチコンテナを実行する
+## Docker Composeでマルチコンテナを実行する
 
-### バージョンの確認
+### 💻 バージョンの確認
 docker desktop for Windows/Macなら`docker-compose`ですぐに使える。  
 Linuxは別途インストールが必要。
 ```
 docker-compose -v
 ```
 
-### Python/Django + PostgreSQLの開発環境構築
+### 💻 Python/Django + PostgreSQLの開発環境構築
 ```
 02/
 ├── Dockerfile
@@ -135,7 +137,7 @@ docker-compose -v
 ```
 
 ```
-# YMLにしたがってコンテナをポコポコ並べる
+# YMLの記述に沿ってコンテナをポコポコ並べる
 docker-compose up
 
 # デタッチドモードでコンテナを並べる
@@ -150,12 +152,40 @@ docker container exec -it django_web django-admin startproject docker_hands_on
 
 # djangoの簡易サーバーを起動
 docker container exec -it django_web python docker_hands_on/manage.py runserver 0:8000
+
+# ブラウザで `localhost:8000` へアクセス
+
+# コンテナを落とす
+docker-compose down
 ```
 
-### Golang + Node.js +
+## 永続化データの扱い
+### 💻 ボリュームをマウントしてDBのデータを保存する
 ```
 03/
 ├── Dockerfile
 ├── docker-compose.yml
 └── requirements.txt
+```
+
+```
+# docker-compose.yml
+# 下記コードで、データ保存用のVOLUMEがマウントされる
+
+...
+db:
+...
+  volumes:
+    - django_data_volume:/var/lib/postgresql/data
+...
+volumes:
+  django_data_volume:
+```
+
+```
+# コンテナ群の起動
+docker-compose up -d
+
+# ボリュームのリスト表示
+docker volume ls
 ```
