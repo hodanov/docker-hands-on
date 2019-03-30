@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  db:
+    container_name: go_db
+    image: mysql:8
+    volumes:
+      - golang_data_volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: go_dev
+      MYSQL_USER: go_dev
+      MYSQL_PASSWORD: go_dev
+  webapi:
+    container_name: go_webapi
+    image: golang:1.12
+    volumes:
+      - ./code:/go/src
+    tty: true
+    ports:
+      - 8081:8081
+    depends_on:
+      - db
+volumes:
+  golang_data_volume:
